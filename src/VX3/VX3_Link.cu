@@ -80,7 +80,7 @@ __device__ bool VX3_Link::isFailed() const { return mat->isFailed(maxStrain); }
 __device__ void VX3_Link::updateRestLength() {
     // update rest length according to temperature of both end
     
-    if (pVNeg->mat->non_deformable || pVPos->mat->non_deformable) // caitlin - don't update the rest length for links connected to non-deformable voxels (non-deformable voxels should ignore the effects of actuation)
+    if (pVNeg->mat->actuation_damper || pVPos->mat->actuation_damper) // caitlin - don't update the rest length for links connected to non-deformable voxels (non-deformable voxels should ignore the effects of actuation)
         return;
     
     currentRestLength = 0.5 * (pVNeg->baseSize(axis) + pVPos->baseSize(axis));

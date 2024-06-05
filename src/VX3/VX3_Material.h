@@ -113,7 +113,7 @@ public:
 
 	//material model
 	bool fixed = false;
-    bool non_deformable = false; // caitlin 
+    bool actuation_damper = false; // caitlin 
 	bool sticky = false;
 	double Cilia = 0;
 

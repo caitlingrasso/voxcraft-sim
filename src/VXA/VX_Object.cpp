@@ -1190,7 +1190,7 @@ CVXC_Material& CVXC_Material::operator=(const CVXC_Material& RefMat)
 	Fixed = RefMat.Fixed;
 	sticky = RefMat.sticky;
 	Cilia = RefMat.Cilia;
-    Non_deformable = RefMat.Non_deformable; // caitlin
+    Actuation_damper = RefMat.Actuation_damper; // caitlin
 
 	// sam:
 	LockZ = RefMat.LockZ;
@@ -1442,7 +1442,7 @@ void CVXC_Material::ReadXML(CXML_Rip* pXML, std::string Version, std::string* Re
 				
 				if (!pXML->FindLoadElement("isTarget", &isTarget)) isTarget = false;
 				if (!pXML->FindLoadElement("Fixed", &Fixed)) Fixed = 0;
-                if (!pXML->FindLoadElement("Non_deformable", &Non_deformable)) Non_deformable = 0; // caitlin
+                if (!pXML->FindLoadElement("Actuation_damper", &Actuation_damper)) Actuation_damper = 0; // caitlin
 				if (!pXML->FindLoadElement("Sticky", &sticky)) sticky = 0;
 				if (!pXML->FindLoadElement("Cilia", &Cilia)) Cilia = 0;
 

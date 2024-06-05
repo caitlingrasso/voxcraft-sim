@@ -518,7 +518,7 @@ public:
 	*/
 	int matid=0;
 	int Fixed=0;
-    int Non_deformable=0; // caitlin
+    int Actuation_damper=0; // caitlin
 	int sticky=0;
 	double Cilia=0;
 	

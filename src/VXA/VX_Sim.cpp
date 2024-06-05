@@ -402,7 +402,7 @@ void CVX_Sim::CopyMat(CVXC_Material *pOld, CVX_Material *pNew) // copies paramet
     pNew->isLightSourceB = (bool)pOld->isLightSourceB;
 
     // caitlin
-    pNew->non_deformable = (bool)pOld->Non_deformable;
+    pNew->actuation_damper = (bool)pOld->Actuation_damper;
 
     pNew->setName(pOld->GetName().c_str());
     pNew->setColor(pOld->GetRedi(), pOld->GetGreeni(), pOld->GetBluei(), pOld->GetAlphai());
