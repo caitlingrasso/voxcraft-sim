@@ -87,6 +87,10 @@ __device__ void VX3_Link::updateRestLength() {
 }
 
 __device__ void VX3_Link::updateTransverseInfo() {
+
+    if (pVNeg->mat->actuation_damper || pVPos->mat->actuation_damper) // caitlin
+        return;
+
     currentTransverseArea = 0.5f * (pVNeg->transverseArea(axis) + pVPos->transverseArea(axis));
     currentTransverseStrainSum = 0.5f * (pVNeg->transverseStrainSum(axis) + pVPos->transverseStrainSum(axis));
 }
