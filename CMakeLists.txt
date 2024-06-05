@@ -7,7 +7,7 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif()
 
-set(CMAKE_CUDA_COMPILER /usr/local/cuda-10.1/bin/nvcc)
+set(CMAKE_CUDA_COMPILER nvcc)
 
 project(voxcraft-sim LANGUAGES CXX CUDA)
 set(CMAKE_CXX_STANDARD 17)

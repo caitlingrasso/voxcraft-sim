@@ -1,0 +1,50 @@
+# Check which version of git is loaded
+git --version
+
+# If below 2.13, change the version of git to a newer one
+module load git/2.43.0 
+
+# Clone voxcraft-sim
+git clone https://github.com/caitlingrasso/voxcraft-sim.git --recurse-submodules
+
+# To make this go, you should do this from a GPU node, so
+srun -p dggpu --time=1:00:00 --gres=gpu:1 --nodes=1 --tasks-per-node=1 \
+    --cpus-per-task=4 --pty /bin/bash
+
+# This sets up the build environment
+
+conda deactivate
+module load spack/spack-0.15.4
+source $SPACK_ROOT/share/spack/setup-env.sh
+spack load gcc@7.3.0
+spack load cuda
+spack load cmake
+spack load boost@1.66.0
+
+# Correct the cuda path (if needed)
+# open CMakeLists.txt and update the following line
+set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)
+# to
+set(CMAKE_CUDA_COMPILER nvcc)
+
+# In case this doesn't work, type 
+which nvcc
+# and copy the output into the .... in set(CMAKE_CUDA_COMPILER ...)
+
+# From the voxcraft-sim directory
+
+# Set up the real make files
+mkdir build
+cd build
+cmake ..
+
+# Make it!
+make -j 4
+
+# Run demo to test
+./voxcraft-sim -i ../demos/basic/ > basic.history
+
+# Copy the executables voxcraft-sim and vx3_node_worker to the folder in which you wish you use voxcraft-sim
+
+# Switch back to base (or py36dg?) environment before running code/voxcraft
+conda activate base

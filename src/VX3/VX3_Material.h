@@ -113,6 +113,7 @@ public:
 
 	//material model
 	bool fixed = false;
+    bool non_deformable = false; // caitlin 
 	bool sticky = false;
 	double Cilia = 0;
 

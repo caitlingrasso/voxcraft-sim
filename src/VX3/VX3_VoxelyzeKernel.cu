@@ -684,6 +684,8 @@ __global__ void gpu_update_links(VX3_Link **links, int num) {
             return;
         if (t->isDetached)
             return;
+        // if (t->pVPos->mat->non_deformable || t->pVNeg->mat->non_deformable) // caitlin - don't update links that are connected to non-deformable voxels on either end
+        //     return;
         t->updateForces();
         if (t->axialStrain() > 100) {
             printf(COLORCODE_BOLD_RED "ERROR: Diverged.");

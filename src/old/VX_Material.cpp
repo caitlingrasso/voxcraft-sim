@@ -44,6 +44,7 @@ CVX_Material& CVX_Material::operator=(const CVX_Material& vIn)
 	isElectricalActive = vIn.isElectricalActive;
 	isTarget = vIn.isTarget;
 	fixed = vIn.fixed;
+    non_deformable = vIn.non_deformable; // caitlin
 	sticky = vIn.sticky;
 	Cilia = vIn.Cilia;
 

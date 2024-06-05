@@ -401,6 +401,9 @@ void CVX_Sim::CopyMat(CVXC_Material *pOld, CVX_Material *pNew) // copies paramet
     pNew->isLightSourceA = (bool)pOld->isLightSourceA;
     pNew->isLightSourceB = (bool)pOld->isLightSourceB;
 
+    // caitlin
+    pNew->non_deformable = (bool)pOld->Non_deformable;
+
     pNew->setName(pOld->GetName().c_str());
     pNew->setColor(pOld->GetRedi(), pOld->GetGreeni(), pOld->GetBluei(), pOld->GetAlphai());
     switch (pOld->GetMatModel()) {
