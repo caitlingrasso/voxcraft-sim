@@ -208,6 +208,11 @@ class VX3_Voxel {
     } //!< Returns the damping multiplier for this voxel. This would normally be called only internally for the internal damping
       //!< calculations.
 
+    // __device__ float overDampingMultiplier() { // caitlin 
+    //     return 2 * mat->_sqrtMass * 2 / previousDt;
+    // } //!< Returns the damping multiplier for this voxel. This would normally be called only internally for the internal damping
+    //   //!< calculations.
+
     // a couple global convenience functions to have wherever the link enums are used
     __device__ static inline linkAxis toAxis(linkDirection direction) {
         return (linkAxis)((int)direction / 2);

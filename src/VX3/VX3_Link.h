@@ -210,6 +210,10 @@ class VX3_Link {
     VX3_Vec3D<> forceNeg, forcePos;
     VX3_Vec3D<> momentNeg, momentPos;
 
+    // // caitlin
+    // float dampingMultiplierNeg;
+    // float dampingMultiplierPos;
+
     float strain;
     float maxStrain,
         /*maxStrainRatio,*/ strainOffset; // keep track of the maximums for

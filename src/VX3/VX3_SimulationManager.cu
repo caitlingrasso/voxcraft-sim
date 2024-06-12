@@ -109,6 +109,14 @@ __global__ void CUDA_Simulation(VX3_VoxelyzeKernel *d_voxelyze_3, int num_simula
                         }
                         printf("[[[]]]");
                     }
+
+                    // caitlin - print the center of mass
+                    if (d_v3->RecordCoM) {
+                        printf("|{{{CoM}}}");
+                        printf("%.4f,%.4f,%.4f,", d_v3->currentCenterOfMass.x, d_v3->currentCenterOfMass.y, d_v3->currentCenterOfMass.z);
+                        printf(";");
+                        printf("{{{}}}");
+                    }
                     printf("\n");
                 }
             }
@@ -344,6 +352,7 @@ void VX3_SimulationManager::readVXD(fs::path base, std::vector<fs::path> files, 
         h_d_tmp.RecordStepSize = pt_merged.get<int>("VXA.Simulator.RecordHistory.RecordStepSize", 0);
         h_d_tmp.RecordLink = pt_merged.get<int>("VXA.Simulator.RecordHistory.RecordLink", 0);
         h_d_tmp.RecordVoxel = pt_merged.get<int>("VXA.Simulator.RecordHistory.RecordVoxel", 1);
+        h_d_tmp.RecordCoM = pt_merged.get<int>("VXA.Simulator.RecordHistory.RecordCoM", 0); //caitlin
 
         ParseMathTree(h_d_tmp.fitness_function, sizeof(h_d_tmp.fitness_function), "VXA.Simulator.FitnessFunction", pt_merged);
         ParseMathTree(h_d_tmp.force_field.token_x_forcefield, sizeof(h_d_tmp.force_field.token_x_forcefield),

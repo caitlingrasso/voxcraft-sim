@@ -171,14 +171,24 @@ __device__ void VX3_Link::updateForces() {
                                  b1 * pos2.z + b2 * (angle1v.y + angle2v.y)); // Use Curstress instead of -a1*Pos2.x
                                                                               // to account for non-linear deformation
     forcePos = -forceNeg;
-
+    
     momentNeg = VX3_Vec3D<double>(a2 * (angle2v.x - angle1v.x), -b2 * pos2.z - b3 * (2 * angle1v.y + angle2v.y),
-                                  b2 * pos2.y - b3 * (2 * angle1v.z + angle2v.z));
+                                b2 * pos2.y - b3 * (2 * angle1v.z + angle2v.z));
     momentPos = VX3_Vec3D<double>(a2 * (angle1v.x - angle2v.x), -b2 * pos2.z - b3 * (angle1v.y + 2 * angle2v.y),
-                                  b2 * pos2.y - b3 * (angle1v.z + 2 * angle2v.z));
+                                    b2 * pos2.y - b3 * (angle1v.z + 2 * angle2v.z));
+
     // local damping:
     if (isLocalVelocityValid()) { // if we don't have the basis for a good
                                   // damping calculation, don't do any damping.
+
+        // // caitlin
+        // if (pVNeg->mat->actuation_damper || pVPos->mat->actuation_damper) { // overdamp the beams connected to actuation damping voxels
+        //     dampingMultiplierNeg = pVNeg->overDampingMultiplier();
+        //     dampingMultiplierPos = pVPos->overDampingMultiplier();
+        // } else {
+        //     dampingMultiplierNeg = pVNeg->dampingMultiplier();
+        //     dampingMultiplierPos = pVPos->dampingMultiplier();
+        // }
 
         float sqA1 = mat->_sqA1, sqA2xIp = mat->_sqA2xIp, sqB1 = mat->_sqB1, sqB2xFMp = mat->_sqB2xFMp, sqB3xIp = mat->_sqB3xIp;
         VX3_Vec3D<double> posCalc(sqA1 * dPos2.x, sqB1 * dPos2.y - sqB2xFMp * (dAngle1.z + dAngle2.z),
@@ -193,6 +203,17 @@ __device__ void VX3_Link::updateForces() {
         momentPos -= 0.5 * pVPos->dampingMultiplier() *
                      VX3_Vec3D<>(sqA2xIp * (dAngle2.x - dAngle1.x), sqB2xFMp * dPos2.z + sqB3xIp * (dAngle1.y + 2 * dAngle2.y),
                                  -sqB2xFMp * dPos2.y + sqB3xIp * (dAngle1.z + 2 * dAngle2.z));
+
+        // // caitlin
+        // forceNeg += dampingMultiplierNeg * posCalc;
+        // forcePos -= dampingMultiplierPos * posCalc;
+
+        // momentNeg -= 0.5 * dampingMultiplierNeg *
+        //              VX3_Vec3D<>(-sqA2xIp * (dAngle2.x - dAngle1.x), sqB2xFMp * dPos2.z + sqB3xIp * (2 * dAngle1.y + dAngle2.y),
+        //                          -sqB2xFMp * dPos2.y + sqB3xIp * (2 * dAngle1.z + dAngle2.z));
+        // momentPos -= 0.5 * dampingMultiplierPos *
+        //              VX3_Vec3D<>(sqA2xIp * (dAngle2.x - dAngle1.x), sqB2xFMp * dPos2.z + sqB3xIp * (dAngle1.y + 2 * dAngle2.y),
+        //                          -sqB2xFMp * dPos2.y + sqB3xIp * (dAngle1.z + 2 * dAngle2.z));
 
     } else
         setBoolState(LOCAL_VELOCITY_VALID,
