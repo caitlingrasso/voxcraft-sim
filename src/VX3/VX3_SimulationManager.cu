@@ -113,7 +113,7 @@ __global__ void CUDA_Simulation(VX3_VoxelyzeKernel *d_voxelyze_3, int num_simula
                     // caitlin - print the center of mass
                     if (d_v3->RecordCoM) {
                         printf("|{{{CoM}}}");
-                        printf("%.4f,%.4f,%.4f,", d_v3->currentCenterOfMass.x, d_v3->currentCenterOfMass.y, d_v3->currentCenterOfMass.z);
+                        printf("%.4f,%.4f,0.0,", d_v3->currentCenterOfMass.x, d_v3->currentCenterOfMass.y);
                         printf(";");
                         printf("{{{}}}");
                     }
