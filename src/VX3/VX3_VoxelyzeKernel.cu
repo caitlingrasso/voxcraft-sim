@@ -639,9 +639,15 @@ __device__ VX3_MaterialLink *VX3_VoxelyzeKernel::combinedMaterial(VX3_MaterialVo
 }
 
 __device__ void VX3_VoxelyzeKernel::computeFitness() {
-    VX3_Vec3D<> offset = currentCenterOfMass - initialCenterOfMass;
-    fitness_score = VX3_MathTree::eval(offset.x, offset.y, offset.z, collisionCount, currentTime, recentAngle, targetCloseness,
-                                       numClosePairs, num_d_voxels, fitness_function);
+
+    // caitlin
+    // fitness is distance from initial position
+    // fitness_score = sqrt(((currentCenterOfMass.x-initialCenterOfMass.x)*(currentCenterOfMass.x-initialCenterOfMass.x))+((currentCenterOfMass.y-initialCenterOfMass.y)*(currentCenterOfMass.y-initialCenterOfMass.y)));
+    fitness_score = currentCenterOfMass.x-initialCenterOfMass.x; // fitness is distance traveled in the positive x direction
+
+    // VX3_Vec3D<> offset = currentCenterOfMass - initialCenterOfMass;
+    // fitness_score = VX3_MathTree::eval(offset.x, offset.y, offset.z, collisionCount, currentTime, recentAngle, targetCloseness,
+    //                                    numClosePairs, num_d_voxels, fitness_function);
 }
 
 __device__ void VX3_VoxelyzeKernel::registerTargets() {
