@@ -641,13 +641,22 @@ __device__ VX3_MaterialLink *VX3_VoxelyzeKernel::combinedMaterial(VX3_MaterialVo
 __device__ void VX3_VoxelyzeKernel::computeFitness() {
 
     // caitlin
-    // fitness is distance from initial position
-    // fitness_score = sqrt(((currentCenterOfMass.x-initialCenterOfMass.x)*(currentCenterOfMass.x-initialCenterOfMass.x))+((currentCenterOfMass.y-initialCenterOfMass.y)*(currentCenterOfMass.y-initialCenterOfMass.y)));
-    fitness_score = currentCenterOfMass.x-initialCenterOfMass.x; // fitness is distance traveled in the positive x direction
 
-    // VX3_Vec3D<> offset = currentCenterOfMass - initialCenterOfMass;
-    // fitness_score = VX3_MathTree::eval(offset.x, offset.y, offset.z, collisionCount, currentTime, recentAngle, targetCloseness,
-    //                                    numClosePairs, num_d_voxels, fitness_function);
+    dx = currentCenterOfMass.x-initialCenterOfMass.x;
+    dy = currentCenterOfMass.y-initialCenterOfMass.y;
+
+    // fitness = distance from initial position
+    // fitness_score = sqrt(((currentCenterOfMass.x-initialCenterOfMass.x)*(currentCenterOfMass.x-initialCenterOfMass.x))+((currentCenterOfMass.y-initialCenterOfMass.y)*(currentCenterOfMass.y-initialCenterOfMass.y)));
+
+    // fitness = distance in the positive x direction
+    // fitness_score = dx;
+
+    //fitness = max distance in the +x and +y directions (walking at a 45 degree line)
+    // fitness_score = dx*dy;
+
+    // fitness = max distance traveled in positive x with exponential penalty for travling in the y-direction
+    fitness_score = dx/expf(fabsf(dy));    
+
 }
 
 __device__ void VX3_VoxelyzeKernel::registerTargets() {

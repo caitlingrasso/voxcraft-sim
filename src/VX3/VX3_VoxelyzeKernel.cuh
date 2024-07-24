@@ -109,6 +109,7 @@ class VX3_VoxelyzeKernel {
     int RecordLink = 0;
     int RecordVoxel = 0;
     int RecordCoM = 0; // caitlin 
+    double dx, dy; // caitlin - for fitness function calculations
 
     // Safety Guard during the creation of new link
     int SafetyGuard = 500;
